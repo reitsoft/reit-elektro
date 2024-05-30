@@ -1,0 +1,110 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Article {
+  id              Int               @id @default(autoincrement())
+  name            String?           @unique
+  description     String?
+  manufacturerId  Int               @default(1)
+  categoryId      Int               @default(1)
+  vpe             Int               @default(1)
+  unitId          Int               @default(1)
+  price           Float?
+  url             String
+  imageUrl        String?
+  image           Bytes?
+  error           Boolean           @default(false)
+  deleted         Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Category        Category          @relation(fields: [categoryId], references: [id])
+  Manufacturer    Manufacturer      @relation(fields: [manufacturerId], references: [id])
+  Unit            Unit              @relation(fields: [unitId], references: [id])
+  ProjectArticles ProjectArticles[]
+
+  @@index([categoryId], map: "Article_categoryId_fkey")
+  @@index([manufacturerId], map: "Article_manufacturerId_fkey")
+  @@index([unitId], map: "Article_unitId_fkey")
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String
+  Article     Article[]
+}
+
+model Customer {
+  id      Int       @id @default(autoincrement())
+  company String
+  name    String    @unique
+  address String
+  city    String
+  phone   String
+  email   String
+  comment String?
+  Project Project[]
+}
+
+model Manufacturer {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  web     String?
+  Article Article[]
+}
+
+model Project {
+  id              Int               @id @default(autoincrement())
+  name            String
+  description     String            @default("")
+  statusId        Int               @default(1)
+  customerId      Int
+  ident           String            @unique
+  label           String?
+  priority        String?
+  quotedPrice     Float             @default(0)
+  revenue         Float             @default(0)
+  Customer        Customer          @relation(fields: [customerId], references: [id])
+  Status          Status            @relation(fields: [statusId], references: [id])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt()
+  ProjectArticles ProjectArticles[]
+
+  @@index([customerId], map: "Project_customerId_fkey")
+  @@index([statusId], map: "Project_statusId_fkey")
+}
+
+model ProjectArticles {
+  id           Int     @id @default(autoincrement())
+  projectId    Int
+  articleId    Int
+  amount       Int     @default(1)
+  comment      String?
+  projectPrice Float  @default(0)
+  Article      Article @relation(fields: [articleId], references: [id])
+  Project      Project @relation(fields: [projectId], references: [id])
+
+  @@index([articleId], map: "ProjectArticles_articleId_fkey")
+  @@index([projectId], map: "ProjectArticles_projectId_fkey")
+}
+
+model Status {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  Project     Project[]
+}
+
+model Unit {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  short   String    @unique
+  Article Article[]
+}
