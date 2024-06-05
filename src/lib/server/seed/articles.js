@@ -6,11 +6,12 @@ export default async () => {
 		create: {
 			name: 'LS B16',
 			description: 'Leitungsschutzschalter B16A',
-			manufacturerId: 1,
-			categoryId: 1,
+			manufacturerId: 2,
+			categoryId: 2,
 			price: 1.98,
 			vpe: 1,
-			unitId: 1,
+			unitId: 2,
+			url: "",
 			createdAt: new Date()
 		},
 		update: {}
@@ -21,11 +22,12 @@ export default async () => {
 		create: {
 			name: 'PS3/12FI',
 			description: 'Phasenschiene für FI und 8 LS',
-			manufacturerId: 1,
-			categoryId: 1,
+			manufacturerId: 2,
+			categoryId: 2,
 			price: 6.98,
 			vpe: 1,
-			unitId: 1,
+			unitId: 2,
+			url: "",
 			createdAt: new Date()
 		},
 		update: {}

@@ -48,7 +48,10 @@
 
 	function uint8ArrayToBase64(uint8Array) {
 		let binary = '';
-		const len = uint8Array.length;
+		const len = uint8Array?.length ||0;
+		if(len === 0) {
+			return 0
+		}
 		for (let i = 0; i < len; i++) {
 			binary += String.fromCharCode(uint8Array[i]);
 		}
@@ -56,6 +59,9 @@
 	}
 
 	function getImage(image) {
+		if(image === 0) {
+			return 0
+		}
 		const base64String = uint8ArrayToBase64(image);
 		return `data:image/jpeg;base64,${base64String}`;
 	}
@@ -96,7 +102,7 @@
 					<TableBodyCell on:click={() => openImageModal(article)}>
 						<img
 							class="-my-3 mx-auto h-[5rem] max-w-24 rounded-lg object-contain object-center py-0.5 shadow-lg"
-							src={getImage(article.image.data)}
+							src={getImage(article.image?.data)}
 							alt={article.name}
 						/>
 					</TableBodyCell>

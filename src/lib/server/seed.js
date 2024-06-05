@@ -12,11 +12,11 @@ async function main() {
 	manufacturer();
 	categories();
 	units();
-	articles();
-	customers();
 	statuses();
+	customers();
 	projects();
-	// projektArticles();
+	articles();
+	projektArticles();
 }
 
 main()
