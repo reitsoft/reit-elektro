@@ -24,7 +24,7 @@ export const PUT = async ({ request }) => {
 
 export const DELETE = async ({ request }) => {
 	const body = await request.json();
-	console.log({delete: body})
+	// console.log({delete: body})
 	await prisma.projectArticles.delete({
 		where: {
 			id: body.id
