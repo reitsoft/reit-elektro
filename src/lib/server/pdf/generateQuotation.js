@@ -117,35 +117,35 @@ export async function generateQuotation(quotationId) {
   }
 
   const file = {
-    pageMargins: [40, 20, 30, 70],
+    pageMargins: [52, 35, 30, 70],
     content: [
       {
         columns: [
           {
             width: '50%',
             image: 'static/images/logo_banner.png',
-            width: 210,
-            margin: [0, 15, 0, 0],
+            width: 230,
+            margin: [0, 0, 0, 15],
           },
           {
             width: '*',
             alignment: 'right',
-            margin: [0, 20, 0, 0],
+            margin: [0, 15, 0, 5],
             stack: [
-              { text: 'REIT ELEKTRIK UG (haftungsbeschränkt)', fontSize: 9, color: '#202020', margin: [0, 0, 0, 0] },
-              { text: 'Ernst-Lehmann-Str. 18', fontSize: 9, color: '#101010', margin: [0, 6, 0, 0] },
-              { text: '88074 Meckenbeuren', fontSize: 9, color: '#202020', margin: [0, 0, 2, 0] },
-              { text: 'info@reit-elektrik.de', fontSize: 9, color: '#202020', margin: [0, 4, 0, 0] },
-              { text: '0151 - 123 123 123', fontSize: 9, color: '#202020', margin: [0, 2, 0, 0] },
+              { text: 'REIT ELEKTRIK UG (haftungsbeschränkt)', fontSize: 9, color: '#101010', margin: [0, 10, 0, 0] },
+              { text: 'Ernst-Lehmann-Str. 18', fontSize: 9, color: '#101010', margin: [0, 4, 0, 0] },
+              { text: '88074 Meckenbeuren', fontSize: 9, color: '#101010', margin: [0, 2, 0, 0] },
+              { text: 'info@reit-elektrik.de', fontSize: 9, color: '#101010', margin: [0, 4, 0, 0] },
+              { text: '0151 - 123 123 123', fontSize: 9, color: '#101010', margin: [0, 2, 0, 0] },
             ]
           }
         ],
       },
-      { text: 'REIT ELEKTRIK UG • Ernst-Lehmann-Str. 18 • 88074 Meckenbeuren', fontSize: 8, color: '#666666', margin: [0, 60, 0, 0] },
-      { text: project.Customer.company, fontSize: 11, color: '#202020', bold: true, margin: [0, 16, 0, 0] },
-      { text: project.Customer.name, fontSize: 11, color: '#202020', margin: [0, 6, 0, 0] },
-      { text: project.Customer.address, fontSize: 11, color: '#202020', margin: [0, 3, 0, 0] },
-      { text: project.Customer.city, fontSize: 11, color: '#202020', margin: [0, 6, 0, 50] },
+      { text: 'REIT ELEKTRIK UG • Ernst-Lehmann-Str. 18 • 88074 Meckenbeuren', fontSize: 8, color: '#888888', margin: [0, 5, 0, 0] },
+      { text: project.Customer.company, fontSize: 11, color: '#666666', bold: true, margin: [0, 12, 0, 0] },
+      { text: project.Customer.name, fontSize: 11, color: '#202020', margin: [0, 2, 0, 0] },
+      { text: project.Customer.address, fontSize: 11, color: '#202020', margin: [0, 2, 0, 0] },
+      { text: project.Customer.city, fontSize: 11, color: '#202020', margin: [0, 2, 0, 50] },
       {
         layout: 'noBorders',
         table: {
