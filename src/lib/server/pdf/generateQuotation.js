@@ -78,7 +78,6 @@ export async function generateQuotation(quotationId) {
 	// console.log(pArticles)
 
 	const totalPriceNetto = projectArticles.reduce((a, b) => a + b.projectPrice * b.amount, 0);
-	console.log(totalPriceNetto);
 	const mwst = totalPriceNetto * 0.19;
 	const totalPriceBrutto = totalPriceNetto + mwst;
 	let pos = 0;
@@ -140,8 +139,19 @@ export async function generateQuotation(quotationId) {
 
 	function table(data, columns) {
 		return {
-			layout: 'noBorders',
+			layout: {
+				// hLineWidth: function (i, node) {
+				// 	return (i === 0 || i === node.table.body.length) ? 2 : 1;
+				// },
+				// vLineWidth: function (i, node) {
+				// 	return (i === 0 || i === node.table.widths.length) ? 2 : 1;
+				// }
+        hLineWidth: function() {return 0.3},
+        vLineWidth: function() {return 0.3}
+      },
+      pageBreak: 'before',
 			table: {
+        headerRows: 1,
 				widths: ['auto', 'auto', '*', 'auto', 'auto', 'auto'],
 				body: buildArticleTableBody(data, columns)
 			}
@@ -149,97 +159,69 @@ export async function generateQuotation(quotationId) {
 	}
 
 	const file = {
-		pageMargins: [52, 35, 30, 70],
-		header: function (page) {
-			if (page != 1) return {
-				columns: [
-					{
-						width: '50%',
-						image: 'static/images/logo_banner.png',
-						width: 230,
-						margin: [0, 10, 0, 15]
-					},
-					{
-						width: '*',
-						alignment: 'right',
-						margin: [0, 0, 0, 5],
-						stack: [
-							{
-								text: 'REIT ELEKTRIK UG (haftungsbeschränkt)',
-								fontSize: 9,
-								color: '#101010',
-								margin: [0, 10, 0, 0]
-							},
-							{
-								text: 'Ernst-Lehmann-Str. 18',
-								fontSize: 9,
-								color: '#101010',
-								margin: [0, 4, 0, 0]
-							},
-							{ text: '88074 Meckenbeuren', fontSize: 9, color: '#101010', margin: [0, 2, 0, 0] },
-							{
-								text: 'info@reit-elektrik.de',
-								fontSize: 9,
-								color: '#101010',
-								margin: [0, 4, 0, 0]
-							},
-							{ text: '0151 - 123 123 123', fontSize: 9, color: '#101010', margin: [0, 2, 0, 0] }
-						]
-					}
-				]
-			}
-			else return {};
+		pageMargins: [52, 90, 30, 80],
+		header: function (currentPage) {
+        return {
+          columns: [
+            {
+              width: '50%',
+              image: 'static/images/logo_banner.png',
+              width: (currentPage === 1 ? 230 : 130),
+              margin: [52, 20, 0, 0]
+            },
+            {
+              width: '*',
+              alignment: 'right',
+              margin: (currentPage === 1 ? [0, 25, 30, 0] : [0, 15, 30, 0] ),
+              stack: [
+                {
+                  text: 'REIT ELEKTRIK UG (haftungsbeschränkt)',
+                  fontSize: (currentPage === 1 ? 8 : 7 ),
+                  color: '#101010',
+                  margin: [0, 10, 0, 0]
+                },
+                {
+                  text: 'Ernst-Lehmann-Str. 18',
+                  fontSize: (currentPage === 1 ? 8 : 7 ),
+                  color: '#101010',
+                  margin: [0, 1, 0, 0]
+                },
+                { 
+                  text: '88074 Meckenbeuren', 
+                  fontSize: (currentPage === 1 ? 8 : 7 ), 
+                  color: '#101010', 
+                  margin: [0, 1, 0, 0]
+                },
+                {
+                  text: 'info@reit-elektrik.de',
+                  fontSize: (currentPage === 1 ? 8 : 7 ),
+                  color: '#101010',
+                  margin: [0, 1, 0, 0]
+                },
+                { 
+                  text: '0151 - 123 123 123', 
+                  fontSize: (currentPage === 1 ? 8 : 7 ), 
+                  color: '#101010', 
+                  margin: [0, 1, 0, 0] 
+                }
+              ]
+            }
+          ]
+        }
 		},
 		content: [
-			{
-				columns: [
-					{
-						width: '50%',
-						image: 'static/images/logo_banner.png',
-						width: 230,
-						margin: [0, 0, 0, 15]
-					},
-					{
-						width: '*',
-						alignment: 'right',
-						margin: [0, 15, 0, 5],
-						stack: [
-							{
-								text: 'REIT ELEKTRIK UG (haftungsbeschränkt)',
-								fontSize: 9,
-								color: '#101010',
-								margin: [0, 10, 0, 0]
-							},
-							{
-								text: 'Ernst-Lehmann-Str. 18',
-								fontSize: 9,
-								color: '#101010',
-								margin: [0, 4, 0, 0]
-							},
-							{ text: '88074 Meckenbeuren', fontSize: 9, color: '#101010', margin: [0, 2, 0, 0] },
-							{
-								text: 'info@reit-elektrik.de',
-								fontSize: 9,
-								color: '#101010',
-								margin: [0, 4, 0, 0]
-							},
-							{ text: '0151 - 123 123 123', fontSize: 9, color: '#101010', margin: [0, 2, 0, 0] }
-						]
-					}
-				]
-			},
 			{
 				text: 'REIT ELEKTRIK UG • Ernst-Lehmann-Str. 18 • 88074 Meckenbeuren',
 				fontSize: 8,
 				color: '#888888',
-				margin: [0, 5, 0, 0]
+				margin: [0, 30, 0, 0]
 			},
 			{
 				text: project.Customer.company,
 				fontSize: 11,
 				color: '#666666',
 				bold: true,
-				margin: [0, 12, 0, 0]
+				margin: [0, 8, 0, 0]
 			},
 			{ text: project.Customer.name, fontSize: 11, color: '#202020', margin: [0, 2, 0, 0] },
 			{ text: project.Customer.address, fontSize: 11, color: '#202020', margin: [0, 2, 0, 0] },
@@ -309,6 +291,32 @@ export async function generateQuotation(quotationId) {
 				color: '#202020',
 				margin: [0, 0, 0, 15]
 			},
+      {
+        // to treat a paragraph as a bulleted list, set an array of items under the ul key
+        ul: [
+          { text: 'Verlegung neuer Stromleitungen' },
+          { text: 'Item 2' },
+          { text: 'Item 3' },
+          { text: 'Item 4' },
+          { text: 'Item 2' },
+          { text: 'Item 3' },
+          { text: 'Item 4' },
+        ]
+      },
+      {
+				text: 'Gerne können Sie mir die Annahme des Angebotes per E-Mail bestätigen.',
+				fontSize: 11,
+				color: '#202020',
+				margin: [0, 20, 0, 0]
+			},
+			{
+				text: 'Für Rückfragen stehe ich Ihnen jederzeit zur Verfügung.',
+				fontSize: 11,
+				color: '#202020',
+				margin: [0, 0, 0, 0]
+			},
+			{ text: 'Mit freundlichen Grüßen,', fontSize: 11, color: '#202020', margin: [0, 10, 0, 0] },
+			{ text: 'Alexander Reit', fontSize: 11, color: '#202020', margin: [0, 5, 0, 0] },
 			table(pArticles, [
 				{
 					text: 'Pos.',
@@ -359,19 +367,19 @@ export async function generateQuotation(quotationId) {
 					margin: [1, 1, 4, 1]
 				}
 			]),
-			{
-				canvas: [
-					{
-						type: 'line',
-						x1: 350,
-						y1: 5,
-						x2: 525,
-						y2: 5,
-						lineWidth: 0.5,
-						lineColor: '#999999'
-					}
-				]
-			},
+			// {
+			// 	canvas: [
+			// 		{
+			// 			type: 'line',
+			// 			x1: 350,
+			// 			y1: 5,
+			// 			x2: 525,
+			// 			y2: 5,
+			// 			lineWidth: 0.5,
+			// 			lineColor: '#999999'
+			// 		}
+			// 	]
+			// },
 			{
 				layout: 'noBorders',
 				table: {
@@ -382,7 +390,7 @@ export async function generateQuotation(quotationId) {
 							{
 								text: 'Nettopreis:',
 								fontSize: 10,
-								color: '#666666',
+								color: '#888888',
 								alignment: 'right',
 								bold: true,
 								margin: [0, 1, 20, 0]
@@ -390,7 +398,7 @@ export async function generateQuotation(quotationId) {
 							{
 								text: totalPriceNetto.toFixed(2).toString().replace('.', ','),
 								fontSize: 10,
-								color: '#666666',
+								color: '#888888',
 								alignment: 'right',
 								bold: true,
 								margin: [0, 1, 2, 0]
@@ -401,6 +409,7 @@ export async function generateQuotation(quotationId) {
 							{
 								text: mwst.toFixed(2).toString().replace('.', ','),
 								fontSize: 10,
+                color: '#888888',
 								alignment: 'right',
 								margin: [0, 1, 2, 0]
 							}
@@ -409,7 +418,7 @@ export async function generateQuotation(quotationId) {
 							{
 								text: 'Angebotspreis:',
 								fontSize: 12,
-								color: '#666666',
+								color: '#888888',
 								alignment: 'right',
 								bold: true,
 								margin: [0, 2, 20, 0]
@@ -417,7 +426,7 @@ export async function generateQuotation(quotationId) {
 							{
 								text: totalPriceBrutto.toFixed(2).toString().replace('.', ','),
 								fontSize: 12,
-								color: '#666666',
+								color: '#888888',
 								alignment: 'right',
 								bold: true,
 								margin: [0, 2, 2, 0]
@@ -425,21 +434,7 @@ export async function generateQuotation(quotationId) {
 						]
 					]
 				}
-			},
-			{
-				text: 'Gerne können Sie mir die Annahme des Angebotes per E-Mail bestätigen.',
-				fontSize: 11,
-				color: '#202020',
-				margin: [0, 20, 0, 0]
-			},
-			{
-				text: 'Für Rückfragen stehe ich Ihnen jederzeit zur Verfügung.',
-				fontSize: 11,
-				color: '#202020',
-				margin: [0, 0, 0, 0]
-			},
-			{ text: 'Mit freundlichen Grüßen,', fontSize: 11, color: '#202020', margin: [0, 10, 0, 0] },
-			{ text: 'Alexander Reit', fontSize: 11, color: '#202020', margin: [0, 5, 0, 0] }
+			}
 		],
 		// content END
 		footer: function (currentPage, pageCount, pageSize) {
