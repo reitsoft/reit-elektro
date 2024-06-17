@@ -4,8 +4,8 @@ export default async () => {
 	await prisma.projectArticles.upsert({
 		where: { id: 1 },
 		create: {
-			projektId: 5,
-			articleId: 5,
+			projektId: 1,
+			articleId: 2,
       amount: 12,
       comment: "Test Projekt1 Artikel 1",
       price: 1.98
@@ -16,8 +16,8 @@ export default async () => {
   await prisma.projectArticles.upsert({
 		where: { id: 2 },
 		create: {
-			projektId: 6,
-			articleId: 6,
+			projektId: 2,
+			articleId: 2,
       amount: 2,
       comment: "Test Rojekt1 Artikel 2",
       price: 6.98

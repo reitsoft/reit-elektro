@@ -5,8 +5,8 @@ export default async () => {
 		where: { ident: "20231501" },
 		create: {
 			name: 'Wohnung Sanierung',
-			statusId: 2,
-      customerId: 3,
+			statusId: 1,
+      customerId: 1,
       ident: "20231501",
       priority: ""
 		},
@@ -17,8 +17,8 @@ export default async () => {
 		where: { ident: "20231502" },
 		create: {
 			name: 'Haus Neubau',
-			statusId: 3,
-      customerId: 4,
+			statusId: 2,
+      customerId: 2,
       ident: "20231502",
       priority: ""
 		},

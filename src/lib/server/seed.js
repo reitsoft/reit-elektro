@@ -9,13 +9,13 @@ import projects from './seed/projects.js';
 import projektArticles from './seed/projectArticles.js';
 
 async function main() {
-	manufacturer();
-	categories();
-	units();
-	statuses();
-	customers();
-	projects();
-	articles();
+	// manufacturer();
+	// categories();
+	// units();
+	// statuses();
+	// customers();
+	// projects();
+	// articles();
 	projektArticles();
 }
 

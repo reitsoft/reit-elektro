@@ -2,7 +2,6 @@ import * as fs from 'fs';
 import { prisma } from '$lib/server/prisma';
 import PdfPrinter from 'pdfmake';
 import blobStream from 'blob-stream';
-import { EUR } from '$lib';
 
 const today = new Date();
 const formatter = new Intl.DateTimeFormat('de-DE', {
@@ -20,6 +19,26 @@ const fonts = {
 		medium: `static/fonts/DINPro-Medium.ttf`,
 		normal: `static/fonts/DINPro-Regular.ttf`,
 		light: `static/fonts/DINPro-Light.ttf`
+	},
+	JetBrainsMonoNL: {
+		bold: `static/fonts/JetBrainsMonoNL-Bold.ttf`,
+		medium: `static/fonts/JetBrainsMonoNL-Medium.ttf`,
+		normal: `static/fonts/JetBrainsMonoNL-Regular.ttf`,
+		light: `static/fonts/JetBrainsMonoNL-Light.ttf`
+	},
+	Richard: {
+		bold: `static/fonts/Richard.otf`,
+		normal: `static/fonts/Richard.otf`
+	},
+	UbuntuMono: {
+		bold: 'static/fonts/UbuntuMono-Bold.ttf',
+		normal: 'static/fonts/UbuntuMono-Regular.ttf'
+	},
+	PTRoot: {
+		bold: `static/fonts/PTRootUI-Bold.otf`,
+		medium: `static/fonts/PTRootUI-Medium.otf`,
+		normal: `static/fonts/PTRootUI-Regular.otf`,
+		light: `static/fonts/PTRootUI-Light.otf`
 	}
 };
 
@@ -117,14 +136,14 @@ export async function generateQuotation(quotationId) {
 				margin: [2, 1, 2, 1]
 			});
 			dataRow.push({
-				text: article.projectPrice.toFixed(2).toString().replace('.', ','),
+				text: article.projectPrice.toFixed(2).toString().replace('.', ',') + ' €',
 				fontSize: 9,
 				alignment: 'right',
 				color: '#202020',
 				margin: [2, 1, 2, 1]
 			});
 			dataRow.push({
-				text: (article.amount * article.projectPrice).toFixed(2).toString().replace('.', ','),
+				text: (article.amount * article.projectPrice).toFixed(2).toString().replace('.', ',') + ' €',
 				fontSize: 9,
 				alignment: 'right',
 				color: '#202020',
@@ -161,53 +180,53 @@ export async function generateQuotation(quotationId) {
 	const file = {
 		pageMargins: [52, 90, 30, 80],
 		header: function (currentPage) {
-        return {
-          columns: [
-            {
-              width: '50%',
-              image: 'static/images/logo_banner.png',
-              width: (currentPage === 1 ? 230 : 130),
-              margin: [52, 20, 0, 0]
-            },
-            {
-              width: '*',
-              alignment: 'right',
-              margin: (currentPage === 1 ? [0, 25, 30, 0] : [0, 15, 30, 0] ),
-              stack: [
-                {
-                  text: 'REIT ELEKTRIK UG (haftungsbeschränkt)',
-                  fontSize: (currentPage === 1 ? 8 : 7 ),
-                  color: '#101010',
-                  margin: [0, 10, 0, 0]
-                },
-                {
-                  text: 'Ernst-Lehmann-Str. 18',
-                  fontSize: (currentPage === 1 ? 8 : 7 ),
-                  color: '#101010',
-                  margin: [0, 1, 0, 0]
-                },
-                { 
-                  text: '88074 Meckenbeuren', 
-                  fontSize: (currentPage === 1 ? 8 : 7 ), 
-                  color: '#101010', 
-                  margin: [0, 1, 0, 0]
-                },
-                {
-                  text: 'info@reit-elektrik.de',
-                  fontSize: (currentPage === 1 ? 8 : 7 ),
-                  color: '#101010',
-                  margin: [0, 1, 0, 0]
-                },
-                { 
-                  text: '0151 - 123 123 123', 
-                  fontSize: (currentPage === 1 ? 8 : 7 ), 
-                  color: '#101010', 
-                  margin: [0, 1, 0, 0] 
-                }
-              ]
-            }
-          ]
-        }
+			return {
+				columns: [
+					{
+						width: '50%',
+						image: 'static/images/logo_banner.png',
+						width: currentPage === 1 ? 230 : 130,
+						margin: [52, 20, 0, 0]
+					},
+					{
+						width: '*',
+						alignment: 'right',
+						margin: currentPage === 1 ? [0, 25, 30, 0] : [0, 15, 30, 0],
+						stack: [
+							{
+								text: 'REIT ELEKTRIK UG (haftungsbeschränkt)',
+								fontSize: currentPage === 1 ? 8 : 7,
+								color: '#101010',
+								margin: [0, 10, 0, 0]
+							},
+							{
+								text: 'Ernst-Lehmann-Str. 18',
+								fontSize: currentPage === 1 ? 8 : 7,
+								color: '#101010',
+								margin: [0, 1, 0, 0]
+							},
+							{
+								text: '88074 Meckenbeuren',
+								fontSize: currentPage === 1 ? 8 : 7,
+								color: '#101010',
+								margin: [0, 1, 0, 0]
+							},
+							{
+								text: 'info@reit-elektrik.de',
+								fontSize: currentPage === 1 ? 8 : 7,
+								color: '#101010',
+								margin: [0, 1, 0, 0]
+							},
+							{
+								text: '0151 - 123 123 123',
+								fontSize: currentPage === 1 ? 8 : 7,
+								color: '#101010',
+								margin: [0, 1, 0, 0]
+							}
+						]
+					}
+				]
+			};
 		},
 		content: [
 			{
@@ -291,19 +310,32 @@ export async function generateQuotation(quotationId) {
 				color: '#202020',
 				margin: [0, 0, 0, 15]
 			},
-      {
-        // to treat a paragraph as a bulleted list, set an array of items under the ul key
-        ul: [
-          { text: 'Verlegung neuer Stromleitungen' },
-          { text: 'Item 2' },
-          { text: 'Item 3' },
-          { text: 'Item 4' },
-          { text: 'Item 2' },
-          { text: 'Item 3' },
-          { text: 'Item 4' },
-        ]
-      },
-      {
+			{
+				// to treat a paragraph as a bulleted list, set an array of items under the ul key
+				ul: [
+					{ text: 'Demontage der vorhandenen Unterverteilung.', fontSize: 11, color: '#202020' },
+					{ text: 'Einbau einer neuen Unterverteilung.', fontSize: 11, color: '#202020' },
+					{ text: 'Verlegung neuer Stromleitungen.', fontSize: 11, color: '#202020' },
+					{
+						text: 'Einbau der Gerätedosen. Unterputz und Trockenbau.',
+						fontSize: 11,
+						color: '#202020'
+					},
+					{ text: 'Einbau aller Schalter und Steckdosen.', fontSize: 11, color: '#202020' },
+					{ text: 'Alle Lampenanschlüsse auf Klemmen legen.', fontSize: 11, color: '#202020' },
+					{
+						text: 'Inbetriebnahme nach Zählereinbau und Zuschaltung durch EVU.',
+						fontSize: 11,
+						color: '#202020'
+					},
+					{
+						text: 'Erstprüfung der Neusinstallation nach DIN VDE 0100-400',
+						fontSize: 11,
+						color: '#202020'
+					}
+				]
+			},
+			{
 				text: 'Gerne können Sie mir die Annahme des Angebotes per E-Mail bestätigen.',
 				fontSize: 11,
 				color: '#202020',
@@ -316,7 +348,7 @@ export async function generateQuotation(quotationId) {
 				margin: [0, 0, 0, 0]
 			},
 			{ text: 'Mit freundlichen Grüßen,', fontSize: 11, color: '#202020', margin: [0, 10, 0, 0] },
-			{ text: 'Alexander Reit', fontSize: 11, color: '#202020', margin: [0, 5, 0, 0] },
+			{ text: 'Alexander Reit', font: 'Richard', fontSize: 26, color: '#005099', margin: [0, 5, 0, 0] },
 			table(pArticles, [
 				{
 					text: 'Pos.',
@@ -351,7 +383,7 @@ export async function generateQuotation(quotationId) {
 					margin: [1, 1, 1, 1]
 				},
 				{
-					text: 'Einzelpreis (EUR)',
+					text: 'Einzelpreis',
 					fontSize: 9,
 					alignment: 'right',
 					color: '#202020',
@@ -359,12 +391,12 @@ export async function generateQuotation(quotationId) {
 					margin: [1, 1, 1, 1]
 				},
 				{
-					text: 'Gesamt (EUR)',
+					text: 'Gesamt',
 					fontSize: 9,
 					alignment: 'right',
 					color: '#202020',
 					fillColor: '#F0F0F0',
-					margin: [1, 1, 4, 1]
+					margin: [10, 1, 4, 1]
 				}
 			]),
 			// {
@@ -396,22 +428,28 @@ export async function generateQuotation(quotationId) {
 								margin: [0, 1, 20, 0]
 							},
 							{
-								text: totalPriceNetto.toFixed(2).toString().replace('.', ','),
+								text: totalPriceNetto.toFixed(2).toString().replace('.', ',') + ' €',
 								fontSize: 10,
 								color: '#888888',
 								alignment: 'right',
 								bold: true,
-								margin: [0, 1, 2, 0]
+								margin: [0, 1, 5, 0]
 							}
 						],
 						[
-							{ text: 'Zzgl. 19% USt.:', fontSize: 10, alignment: 'right', margin: [0, 1, 20, 0] },
 							{
-								text: mwst.toFixed(2).toString().replace('.', ','),
+								text: 'Zzgl. 19% USt.:',
 								fontSize: 10,
-                color: '#888888',
+								color: '#666666',
 								alignment: 'right',
-								margin: [0, 1, 2, 0]
+								margin: [0, 1, 20, 0]
+							},
+							{
+								text: mwst.toFixed(2).toString().replace('.', ',') + ' €',
+								fontSize: 10,
+								color: '#666666',
+								alignment: 'right',
+								margin: [0, 1, 5, 0]
 							}
 						],
 						[
@@ -424,12 +462,12 @@ export async function generateQuotation(quotationId) {
 								margin: [0, 2, 20, 0]
 							},
 							{
-								text: totalPriceBrutto.toFixed(2).toString().replace('.', ','),
+								text: totalPriceBrutto.toFixed(2).toString().replace('.', ',') + ' €',
 								fontSize: 12,
 								color: '#888888',
 								alignment: 'right',
 								bold: true,
-								margin: [0, 2, 2, 0]
+								margin: [0, 2, 5, 0]
 							}
 						]
 					]
@@ -548,7 +586,11 @@ export async function generateQuotation(quotationId) {
 			];
 		},
 		defaultStyle: {
-			font: 'DINPro'
+			// font: 'DINPro',
+			// font: 'JetBrainsMonoNL',
+			// font: 'Richard',
+			font: 'UbuntuMono',
+			font: 'PTRoot'
 		}
 	};
 

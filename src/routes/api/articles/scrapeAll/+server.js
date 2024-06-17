@@ -3,8 +3,9 @@ import { prisma } from '$lib/server/prisma';
 import puppeteer from 'puppeteer';
 
 export const GET = async () => {
-	await scrapeAllArticles();
-	return json({ status: 'OK' });
+	
+	await scrapeAllArticles()
+	return json({ status: 'scraping...' });
 };
 
 async function getArticles() {
@@ -44,6 +45,7 @@ async function getImageBlob(page, imageUrl) {
 
 async function scrapeData(page, article) {
 	const { id, url } = article;
+	// console.log(url)
 	await page.goto(url);
 	const elementPrice = await page.waitForSelector('.current-price-container');
 	const value = await elementPrice.evaluate((x) => x.textContent);
