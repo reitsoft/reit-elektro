@@ -42,7 +42,7 @@ export const actions = {
     console.log({id});
 
 		try {
-			await prisma.article.delete({
+			await prisma.manufacturer.delete({
 				where: {
 					id: Number(id)
 				}

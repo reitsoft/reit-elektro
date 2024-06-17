@@ -143,7 +143,8 @@ export async function generateQuotation(quotationId) {
 				margin: [2, 1, 2, 1]
 			});
 			dataRow.push({
-				text: (article.amount * article.projectPrice).toFixed(2).toString().replace('.', ',') + ' €',
+				text:
+					(article.amount * article.projectPrice).toFixed(2).toString().replace('.', ',') + ' €',
 				fontSize: 9,
 				alignment: 'right',
 				color: '#202020',
@@ -165,12 +166,16 @@ export async function generateQuotation(quotationId) {
 				// vLineWidth: function (i, node) {
 				// 	return (i === 0 || i === node.table.widths.length) ? 2 : 1;
 				// }
-        hLineWidth: function() {return 0.3},
-        vLineWidth: function() {return 0.3}
-      },
-      pageBreak: 'before',
+				hLineWidth: function () {
+					return 0.3;
+				},
+				vLineWidth: function () {
+					return 0.3;
+				}
+			},
+			pageBreak: 'before',
 			table: {
-        headerRows: 1,
+				headerRows: 1,
 				widths: ['auto', 'auto', '*', 'auto', 'auto', 'auto'],
 				body: buildArticleTableBody(data, columns)
 			}
@@ -178,7 +183,7 @@ export async function generateQuotation(quotationId) {
 	}
 
 	const file = {
-		pageMargins: [52, 90, 30, 80],
+		pageMargins: [52, 90, 30, 105],
 		header: function (currentPage) {
 			return {
 				columns: [
@@ -248,7 +253,7 @@ export async function generateQuotation(quotationId) {
 			{
 				layout: 'noBorders',
 				table: {
-					widths: ['auto', '*', 45, 'auto'],
+					widths: [75, '*', 35, 90],
 
 					body: [
 						[
@@ -313,18 +318,18 @@ export async function generateQuotation(quotationId) {
 			{
 				// to treat a paragraph as a bulleted list, set an array of items under the ul key
 				ul: [
-					{ text: 'Demontage der vorhandenen Unterverteilung.', fontSize: 11, color: '#202020' },
-					{ text: 'Einbau einer neuen Unterverteilung.', fontSize: 11, color: '#202020' },
-					{ text: 'Verlegung neuer Stromleitungen.', fontSize: 11, color: '#202020' },
+					{ text: 'Demontage der vorhandenen Unterverteilung', fontSize: 11, color: '#202020' },
+					{ text: 'Einbau einer neuen Unterverteilung', fontSize: 11, color: '#202020' },
+					{ text: 'Verlegung neuer Stromleitungen', fontSize: 11, color: '#202020' },
 					{
-						text: 'Einbau der Gerätedosen. Unterputz und Trockenbau.',
+						text: 'Einbau der Gerätedosen. Unterputz und Trockenbau',
 						fontSize: 11,
 						color: '#202020'
 					},
 					{ text: 'Einbau aller Schalter und Steckdosen.', fontSize: 11, color: '#202020' },
-					{ text: 'Alle Lampenanschlüsse auf Klemmen legen.', fontSize: 11, color: '#202020' },
+					{ text: 'Alle Lampenanschlüsse auf Klemmen legen', fontSize: 11, color: '#202020' },
 					{
-						text: 'Inbetriebnahme nach Zählereinbau und Zuschaltung durch EVU.',
+						text: 'Inbetriebnahme nach Zählereinbau und Zuschaltung durch EVU',
 						fontSize: 11,
 						color: '#202020'
 					},
@@ -348,7 +353,13 @@ export async function generateQuotation(quotationId) {
 				margin: [0, 0, 0, 0]
 			},
 			{ text: 'Mit freundlichen Grüßen,', fontSize: 11, color: '#202020', margin: [0, 10, 0, 0] },
-			{ text: 'Alexander Reit', font: 'Richard', fontSize: 26, color: '#005099', margin: [0, 5, 0, 0] },
+			{
+				text: 'Alexander Reit',
+				font: 'Richard',
+				fontSize: 30,
+				color: '#005099',
+				margin: [0, 5, 0, 0]
+			},
 			table(pArticles, [
 				{
 					text: 'Pos.',
@@ -477,6 +488,15 @@ export async function generateQuotation(quotationId) {
 		// content END
 		footer: function (currentPage, pageCount, pageSize) {
 			return [
+				{
+					text: 'www.reit-elektrik.de',
+					alignment: 'center',
+					size: '9',
+					color: '#005099',
+					margin: [0, 10, 0, 5],
+					bold: true,
+					link: 'www.reit-elektrik.de'
+				},
 				{
 					canvas: [
 						{

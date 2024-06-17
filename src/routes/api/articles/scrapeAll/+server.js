@@ -45,7 +45,7 @@ async function getImageBlob(page, imageUrl) {
 
 async function scrapeData(page, article) {
 	const { id, url } = article;
-	// console.log(url)
+	console.log(url)
 	await page.goto(url);
 	const elementPrice = await page.waitForSelector('.current-price-container');
 	const value = await elementPrice.evaluate((x) => x.textContent);
@@ -59,7 +59,7 @@ async function scrapeData(page, article) {
 		const name = await elementName.evaluate((x) => x.textContent);
 
 		const imageUrlpart = await page.$$eval(
-			'#product_image_swiper > div > div > div > a > img',
+			'#product_image_swiper > div > div.swiper-slide.swiper-slide-active > div > a > img',
 			(imgs) => imgs[0].getAttribute('src')
 		);
 
@@ -84,9 +84,9 @@ async function scrapeAllArticles() {
 	articles.forEach(async (article) => {
 		const browser = await puppeteer.launch({ headless: true });
 		const page = await browser.newPage();
-		wait(500);
+		// wait(2500);
 		const data = await scrapeData(page, article);
-		wait(500);
+		// wait(2500);
 		await browser.close();
 		const updatedArticle = { ...article, ...data };
 

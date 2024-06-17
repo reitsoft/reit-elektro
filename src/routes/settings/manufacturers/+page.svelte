@@ -1,6 +1,7 @@
 <script>
 	import {
 		A,
+		P,
 		ButtonGroup,
 		Label,
 		Input,
@@ -17,7 +18,7 @@
 	export let data;
 
 	$: ({ manufacturers } = data);
-	// console.log(data);
+	// console.log(manufacturers);
 </script>
 
 <div class="grid grid-cols-12 gap-4">
@@ -34,22 +35,26 @@
 				<TableBody tableBodyClass="divide-y">
 					{#each manufacturers as { id, name, web, anzahl }}
 						<TableBodyRow>
-							<TableBodyCell>{name}</TableBodyCell>
-							<TableBodyCell><A href={web} target="_black">{web}</A></TableBodyCell>
+							<TableBodyCell><P class="font-semibold" size="lg" color="text-gray-500 dark:text-gray-400">{name}</P></TableBodyCell>
+							<TableBodyCell><A class="text-lg" href={web} target="_black">
+								{web}</A></TableBodyCell>
 							<TableBodyCell>{anzahl}</TableBodyCell>
 							<TableBodyCell
-								><ButtonGroup>
-									<Button>Bearbeiten</Button>
-									<form method="POST" action={`?/delete&id=${id}`}>
-										<Button type="submit" color="red">löschen</Button>
+								>
+								<div class="flex">
+
+									<Button href={`manufacturers/${id}`}>Bearbeiten</Button>
+									<form method="POST" action="?/delete&id={id}">
+										<Button type="submit" color="red" class="ml-2">Löschen</Button>
 									</form>
-								</ButtonGroup></TableBodyCell
+								</div>
+									</TableBodyCell
 							>
 						</TableBodyRow>
 					{/each}
 				</TableBody>
 			</Table>
-			<!-- <P class="mb-3 font-semibold" size="lg" color="text-gray-500 dark:text-gray-400"
+			<!-- 
 				>Name
 				<A href="www.web.de">www.web.de</A>
 			</P> -->
