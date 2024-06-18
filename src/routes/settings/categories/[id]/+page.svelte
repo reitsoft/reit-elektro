@@ -4,18 +4,18 @@
 
 	export let data;
 
-	const { manufacturer } = data;
+	const { category } = data;
 </script>
 
 <div class="grid grid-cols-12 gap-4">
 	<div class="col-span-6">
-		<Heading class="mb-4" customSize="text-2xl font-semibold">Hersteller bearbeiten</Heading>
+		<Heading class="mb-4" customSize="text-2xl font-semibold">Kategorie bearbeiten</Heading>
 		<div class="py-4">
 			<form method="POST" action="?/update" use:enhance>
 				<Label for="name">Name</Label>
-				<Input id="name" name="name" class="w-full" value={manufacturer.name}/>
-				<Label for="web" class="mt-4">Webseite</Label>
-				<Input id="web" name="web" value={manufacturer.web}/>
+				<Input id="name" name="name" class="w-full" value={category.name}/>
+				<Label for="web" class="mt-4">Beschreibung</Label>
+				<Input id="web" name="web" value={category.description}/>
 				<Button class="mt-4 w-full" type="submit">Aktualisieren</Button>
 			</form>
 		</div>

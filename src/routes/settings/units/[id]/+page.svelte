@@ -4,7 +4,7 @@
 
 	export let data;
 
-	const { manufacturer } = data;
+	const { unit } = data;
 </script>
 
 <div class="grid grid-cols-12 gap-4">
@@ -13,9 +13,9 @@
 		<div class="py-4">
 			<form method="POST" action="?/update" use:enhance>
 				<Label for="name">Name</Label>
-				<Input id="name" name="name" class="w-full" value={manufacturer.name}/>
-				<Label for="web" class="mt-4">Webseite</Label>
-				<Input id="web" name="web" value={manufacturer.web}/>
+				<Input id="name" name="name" class="w-full" value={unit.name}/>
+				<Label for="web" class="mt-4">Abkürzung</Label>
+				<Input id="web" name="web" value={unit.short}/>
 				<Button class="mt-4 w-full" type="submit">Aktualisieren</Button>
 			</form>
 		</div>

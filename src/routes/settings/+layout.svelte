@@ -13,12 +13,13 @@
 	$: activeUrl = $page.url.pathname;
 </script>
 
-<div class="mb-4 flex justify-between">
+<!-- <div class="mb-4 flex justify-between">
 	<Heading text="Einstellungen" />
-</div>
+</div> -->
 
 <div class="grid grid-cols-12 gap-2">
-	<div class="col-span-3">
+	<div class="col-span-2">
+		<Heading text="Einstellungen" />
 		<Sidebar {activeUrl}>
 			<SidebarWrapper>
 				<SidebarGroup>
@@ -54,5 +55,5 @@
 			</SidebarWrapper>
 		</Sidebar>
 	</div>
-	<div class="col-span-9"><slot /></div>
+	<div class="col-span-10 ml-8"><slot /></div>
 </div>

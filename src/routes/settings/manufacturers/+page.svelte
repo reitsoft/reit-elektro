@@ -14,6 +14,8 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
+		import TrashBinOutline from 'flowbite-svelte-icons/TrashBinOutline.svelte'
+	import EditOutline from 'flowbite-svelte-icons/EditOutline.svelte'
 
 	export let data;
 
@@ -24,12 +26,12 @@
 <div class="grid grid-cols-12 gap-4">
 	<div class="col-span-8">
 		<Heading class="mb-4" customSize="text-2xl font-semibold">Hersteller</Heading>
-		<div class="flex py-4">
+		<div class="py-4 pr-10 w-full">
 			<Table shadow>
 				<TableHead>
 					<TableHeadCell>Name</TableHeadCell>
 					<TableHeadCell>Webseite</TableHeadCell>
-					<TableHeadCell>Artikel</TableHeadCell>
+					<TableHeadCell class="flex justify-center">Artikel</TableHeadCell>
 					<TableHeadCell></TableHeadCell>
 				</TableHead>
 				<TableBody tableBodyClass="divide-y">
@@ -38,15 +40,17 @@
 							<TableBodyCell><P class="font-semibold" size="lg" color="text-gray-500 dark:text-gray-400">{name}</P></TableBodyCell>
 							<TableBodyCell><A class="text-lg" href={web} target="_black">
 								{web}</A></TableBodyCell>
-							<TableBodyCell>{anzahl}</TableBodyCell>
+							<TableBodyCell><div class="flex justify-center">{anzahl}</div></TableBodyCell>
 							<TableBodyCell
 								>
-								<div class="flex">
+								<div class="flex justify-end">
+									<ButtonGroup>
 
-									<Button href={`manufacturers/${id}`}>Bearbeiten</Button>
-									<form method="POST" action="?/delete&id={id}">
-										<Button type="submit" color="red" class="ml-2">Löschen</Button>
-									</form>
+										<form method="POST" action="?/delete&id={id}">
+										<Button outline color="yellow" href={`manufacturers/${id}`}><EditOutline /></Button>
+											<Button outline type="submit" color="red"><TrashBinOutline /></Button>
+										</form>
+									</ButtonGroup>
 								</div>
 									</TableBodyCell
 							>
