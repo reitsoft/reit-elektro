@@ -14,8 +14,8 @@
 			<form method="POST" action="?/update" use:enhance>
 				<Label for="name">Name</Label>
 				<Input id="name" name="name" class="w-full" value={category.name}/>
-				<Label for="web" class="mt-4">Beschreibung</Label>
-				<Input id="web" name="web" value={category.description}/>
+				<Label for="description" class="mt-4">Beschreibung</Label>
+				<Input id="description" name="description" value={category.description}/>
 				<Button class="mt-4 w-full" type="submit">Aktualisieren</Button>
 			</form>
 		</div>

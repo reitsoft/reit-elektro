@@ -21,7 +21,7 @@
 	<div class="col-span-2">
 		<Heading text="Einstellungen" />
 		<Sidebar {activeUrl}>
-			<SidebarWrapper>
+			<SidebarWrapper class="mt-8">
 				<SidebarGroup>
           <SidebarItem label="Allgemein" href="/settings">
 						<svelte:fragment slot="icon">
